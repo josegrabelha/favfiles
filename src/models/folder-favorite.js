@@ -96,6 +96,10 @@ class FolderFavorite extends BaseItem {
   }
 
   async activate() {
+    if (!await this.exists()) {
+      return vscode.window.showWarningMessage(`Folder not found: ${this.resourcePath}`);
+    }
+
     const files = await this.fileFavoritesFirstLevel();
 
     if (!files.length) {
@@ -163,9 +167,9 @@ class FolderFavorite extends BaseItem {
     item.contextValue = this.dynamic ? 'browse-folder' : 'folder';
     item.tooltip = `${this.resourcePath}\nFilter: ${this.filter}`;
 
-    if (!this.dynamic && !await this.exists()) {
+    if (!await this.exists()) {
       descriptionParts.push('[Missing]');
-      item.contextValue = 'folder-missing';
+      item.contextValue = this.dynamic ? 'browse-folder-missing' : 'folder-missing';
       item.tooltip = `${this.resourcePath}\nFilter: ${this.filter}\n\nThis folder could not be found.`;
     }
 

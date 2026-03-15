@@ -4,12 +4,6 @@
 
 Instead of jumping through the Explorer every time, you can pin what matters, organize it into groups, and get back to it in a couple of clicks.
 
-> FavFiles is a maintained fork of [fredjeck/fav](https://github.com/fredjeck/fav), with a reorganized codebase and ongoing improvements.
-
-![FavFiles overview](images/favfiles-hero.png)
-
-*Suggested image: a clean hero screenshot showing the FavFiles view with a few groups, files, and folders already organized.*
-
 ## Why FavFiles
 
 When you work in large repositories, nested folder structures, or multiple projects, the same files tend to come up again and again. FavFiles gives you a personal shortcut tree inside VS Code so the things you open most often stay close.
@@ -28,17 +22,9 @@ FavFiles is useful when you want to:
 
 Add files from the Explorer, from the active editor, or from the Command Palette.
 
-![Add a file](images/favfiles-add-file.gif)
-
-*Suggested image: add a file from the Explorer context menu and show it appearing in the FavFiles view.*
-
 ### Add folders for fast navigation
 
 Save folders to FavFiles and browse them directly from the custom tree without constantly switching back to the Explorer.
-
-![Add a folder](images/favfiles-add-folder.gif)
-
-*Suggested image: add a folder and expand it inside the FavFiles view.*
 
 ### Organize everything into groups
 
@@ -52,35 +38,19 @@ Examples:
 - Customer A
 - Infrastructure
 
-![Create a group](images/favfiles-create-group.gif)
-
-*Suggested image: create a group and move files into it.*
-
 ### Open related files together
 
 If a group contains multiple files, you can open the whole group at once and restore a working context quickly.
 
-![Open a group](images/favfiles-open-group.gif)
-
-*Suggested image: open a group containing several files.*
-
 ### Keep your tree tidy
 
 FavFiles supports renaming, removing, moving items, sorting, and using the native tree filter to quickly find what you saved.
-
-![Search and organize](images/favfiles-search-sort.png)
-
-*Suggested image: show the tree filter in use and a tidy grouped structure.*
 
 ## How to use
 
 ### 1. Open the FavFiles view
 
 Open the FavFiles view from the Activity Bar.
-
-![Open the view](images/favfiles-open-view.png)
-
-*Suggested image: highlight where the FavFiles icon/view is located in VS Code.*
 
 ### 2. Add files or folders
 
@@ -145,7 +115,7 @@ Default:
 
 ## Requirements
 
-- VS Code 1.51.0 or newer
+- VS Code 1.66.0 or newer
 
 ## Miscellaneous
 

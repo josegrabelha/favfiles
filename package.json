@@ -126,6 +126,10 @@
         "title": "Remove"
       },
       {
+        "command": "favFolderTree.context.changeFolderFilter",
+        "title": "Change filter..."
+      },
+      {
         "command": "favFolderTree.context.moveFavorite",
         "title": "Move to..."
       },
@@ -300,6 +304,10 @@
         {
           "command": "favFolderTree.context.removeFavorite",
           "when": "view == fav-folder-tree-favorites && (viewItem == favorite || viewItem == favorite-missing || viewItem == folder || viewItem == folder-missing || viewItem == group || viewItem == group-empty)"
+        },
+        {
+          "command": "favFolderTree.context.changeFolderFilter",
+          "when": "view == fav-folder-tree-favorites && (viewItem == folder || viewItem == folder-missing)"
         },
         {
           "command": "favFolderTree.context.moveFavorite",

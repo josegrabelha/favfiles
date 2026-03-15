@@ -292,6 +292,19 @@ class ExtensionController {
     }
   }
 
+  async promptFolderFilter(initialValue = '*') {
+    return vscode.window.showInputBox({
+      prompt: 'File filter for this favorite folder (wildcards supported, e.g. *.pdf; default is *)',
+      value: initialValue,
+      validateInput: value => {
+        if (!value || !value.trim()) {
+          return 'Enter a filter pattern such as * or *.pdf';
+        }
+        return undefined;
+      },
+    });
+  }
+
   async createFolder(uri) {
     let fsPath = this.selectedElementPath(uri);
 
@@ -309,16 +322,7 @@ class ExtensionController {
       fsPath = picks[0].fsPath;
     }
 
-    const filter = await vscode.window.showInputBox({
-      prompt: 'File filter for this favorite folder (wildcards supported, e.g. *.pdf; default is *)',
-      value: '*',
-      validateInput: value => {
-        if (!value || !value.trim()) {
-          return 'Enter a filter pattern such as * or *.pdf';
-        }
-        return undefined;
-      },
-    });
+    const filter = await this.promptFolderFilter('*');
 
     if (filter === undefined) {
       return undefined;
@@ -334,6 +338,23 @@ class ExtensionController {
     }
 
     return new FolderFavorite(label, fsPath, false, filter);
+  }
+
+  async changeFolderFilter(target) {
+    const folder = this.normalizeFolderTarget(target);
+    if (!(folder instanceof FolderFavorite) || folder.dynamic) {
+      return;
+    }
+
+    const filter = await this.promptFolderFilter(folder.filter || '*');
+    if (filter === undefined) {
+      return;
+    }
+
+    folder.filter = filter;
+    await this._store.update();
+    this.refreshView(folder);
+    this._treeView.reveal(folder, { select: true, focus: true, expand: false });
   }
 
   editFavorites() {
@@ -617,6 +638,7 @@ class ExtensionController {
 
     reg('favFolderTree.context.removeFavorite', this.removeFavorite);
     reg('favFolderTree.context.renameFavorite', this.renameFavorite);
+    reg('favFolderTree.context.changeFolderFilter', this.changeFolderFilter);
     reg('favFolderTree.context.moveFavorite', this.moveFavorite);
     reg('favFolderTree.context.openGroup', this.openGroup);
     reg('favFolderTree.context.openFolder', this.openFolder);

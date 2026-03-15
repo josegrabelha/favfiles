@@ -1,10 +1,14 @@
 ## 1.0.2
 
-- "Missing" information now applies to all files and folders
+- Added support for changing the file filter of a favorite folder after creation
+
+## 1.0.2
+
+- Added missing information for all files and folders
 
 ## 1.0.1
 
-- README improved
+- Improved the README documentation
 
 ## 1.0.0
 

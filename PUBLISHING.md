@@ -96,6 +96,11 @@ Generate a VSIX file:
 ```bash
 vsce package
 ```
+Or:
+
+```bash
+vsce package -o favfiles.vsix
+```
 
 Or, if the project defines package scripts, you may use the npm script instead:
 

@@ -4,6 +4,8 @@
 
 Instead of jumping through the Explorer every time, you can pin what matters, organize it into groups, and get back to it in a couple of clicks.
 
+![FavFiles overview](images/favfiles-hero.png)
+
 ## Why FavFiles
 
 When you work in large repositories, nested folder structures, or multiple projects, the same files tend to come up again and again. FavFiles gives you a personal shortcut tree inside VS Code so the things you open most often stay close.
@@ -17,6 +19,8 @@ FavFiles is useful when you want to:
 - keep a personal working set outside the repository structure
 
 ## Features
+
+![Menu](images/favfiles-features.png)
 
 ### Pin files you use all the time
 

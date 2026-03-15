@@ -1,0 +1,5 @@
+#Directories
+
+#Files
+.DS_Store
+*.vsix

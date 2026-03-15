@@ -22,7 +22,6 @@ class ExtensionController {
     });
 
     this.registerCommands(context);
-    this.updateFavoriteFoldersContext();
 
     context.subscriptions.push(
       vscode.workspace.onDidSaveTextDocument(doc => {
@@ -46,15 +45,9 @@ class ExtensionController {
 
 
   refreshView(item) {
-    this.updateFavoriteFoldersContext();
     if (this._provider) {
       this._provider.refresh(item);
     }
-  }
-
-  updateFavoriteFoldersContext() {
-    const hasFavoriteFolders = this._store.favorites().some(item => item instanceof FolderFavorite && !item.dynamic);
-    vscode.commands.executeCommand('setContext', 'favFolderTree.hasFavoriteFolders', hasFavoriteFolders);
   }
 
   getTreeDragDenialReason(item) {
@@ -429,12 +422,23 @@ class ExtensionController {
   }
 
   async refreshFolder(target) {
-    const folder = this.normalizeFolderTarget(target);
-    if (!(folder instanceof FolderFavorite)) {
+    if (!target) {
+      this.refreshView(undefined);
       return;
     }
 
-    this.refreshView(folder);
+    if (target.parent instanceof FolderFavorite) {
+      this.refreshView(target.parent);
+      return;
+    }
+
+    const folder = this.normalizeFolderTarget(target);
+    if (folder instanceof FolderFavorite) {
+      this.refreshView(folder);
+      return;
+    }
+
+    this.refreshView(target);
   }
 
   async refreshAllFolders() {

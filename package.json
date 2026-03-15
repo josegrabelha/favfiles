@@ -2,7 +2,7 @@
   "name": "favfiles",
   "displayName": "FavFiles",
   "description": "Keep your favorite files and folders in a browsable tree.",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "publisher": "josegrabelha",
   "author": "Jose Abelha",
   "license": "MIT",
@@ -183,7 +183,7 @@
       },
       {
         "command": "favFolderTree.view.refreshAllFolders",
-        "title": "Refresh all folders",
+        "title": "Refresh all",
         "icon": {
           "light": "resources/light/refresh.svg",
           "dark": "resources/dark/refresh.svg"
@@ -291,19 +291,19 @@
       "view/item/context": [
         {
           "command": "favFolderTree.context.openInNewWindow",
-          "when": "view == fav-folder-tree-favorites && (viewItem == folder || viewItem == folder-missing || viewItem == browse-folder)"
+          "when": "view == fav-folder-tree-favorites && (viewItem == folder || viewItem == folder-missing || viewItem == browse-folder || viewItem == browse-folder-missing)"
         },
         {
           "command": "favFolderTree.context.renameFavorite",
-          "when": "view == fav-folder-tree-favorites && (viewItem == favorite || viewItem == folder || viewItem == folder-missing || viewItem == group || viewItem == group-empty)"
+          "when": "view == fav-folder-tree-favorites && (viewItem == favorite || viewItem == favorite-missing || viewItem == folder || viewItem == folder-missing || viewItem == group || viewItem == group-empty)"
         },
         {
           "command": "favFolderTree.context.removeFavorite",
-          "when": "view == fav-folder-tree-favorites && (viewItem == favorite || viewItem == folder || viewItem == folder-missing || viewItem == group || viewItem == group-empty)"
+          "when": "view == fav-folder-tree-favorites && (viewItem == favorite || viewItem == favorite-missing || viewItem == folder || viewItem == folder-missing || viewItem == group || viewItem == group-empty)"
         },
         {
           "command": "favFolderTree.context.moveFavorite",
-          "when": "view == fav-folder-tree-favorites && (viewItem == favorite || viewItem == folder || viewItem == folder-missing || viewItem == group || viewItem == group-empty)"
+          "when": "view == fav-folder-tree-favorites && (viewItem == favorite || viewItem == favorite-missing || viewItem == folder || viewItem == folder-missing || viewItem == group || viewItem == group-empty)"
         },
         {
           "command": "favFolderTree.context.openGroup",
@@ -313,7 +313,7 @@
         {
           "command": "favFolderTree.context.openFolder",
           "group": "inline",
-          "when": "view == fav-folder-tree-favorites && (viewItem == folder || viewItem == folder-missing || viewItem == browse-folder)"
+          "when": "view == fav-folder-tree-favorites && (viewItem == folder || viewItem == folder-missing || viewItem == browse-folder || viewItem == browse-folder-missing)"
         },
         {
           "command": "favFolderTree.context.createGroup",
@@ -333,7 +333,7 @@
         },
         {
           "command": "favFolderTree.context.refreshFolder",
-          "when": "view == fav-folder-tree-favorites && (viewItem == folder || viewItem == folder-missing || viewItem == browse-folder)"
+          "when": "view == fav-folder-tree-favorites && (viewItem == favorite || viewItem == favorite-missing || viewItem == folder || viewItem == folder-missing || viewItem == browse-file || viewItem == browse-file-missing || viewItem == browse-folder || viewItem == browse-folder-missing || viewItem == group || viewItem == group-empty)"
         }
       ],
       "view/title": [
@@ -370,7 +370,7 @@
         {
           "command": "favFolderTree.view.refreshAllFolders",
           "group": "navigation@4",
-          "when": "view == fav-folder-tree-favorites && favFolderTree.hasFavoriteFolders"
+          "when": "view == fav-folder-tree-favorites"
         }
       ]
     },
@@ -405,8 +405,8 @@
           ],
           "markdownDescription": "Controls alphabetical order in the tree.",
           "enumDescriptions": [
-            "A\u2013Z order.",
-            "Z\u2013A order."
+            "A–Z order.",
+            "Z–A order."
           ]
         }
       }

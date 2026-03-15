@@ -1,8 +1,0 @@
-.git/**
-.github/**
-.vscode/**
-node_modules/**
-.vscode-test/**
-*.vsix
-scripts/**
-RECONSTRUCTION_NOTES.md

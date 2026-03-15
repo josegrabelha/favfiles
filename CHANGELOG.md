@@ -1,4 +1,4 @@
-## 1.0.2
+## 1.0.3
 
 - Added support for changing the file filter of a favorite folder after creation
 

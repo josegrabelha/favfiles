@@ -12,8 +12,6 @@ The README is focused on users and Marketplace presentation. This file covers th
 - Publisher: set in `package.json`
 - Repository: set in `package.json`
 
-FavFiles is a maintained fork of the original [`fredjeck/fav`](https://github.com/fredjeck/fav).
-
 ## Prerequisites
 
 Before packaging or publishing, make sure you have:

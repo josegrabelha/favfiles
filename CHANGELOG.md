@@ -1,3 +1,8 @@
+## 1.0.4
+
+- TreeView alignment improved.
+- Minor adjustments.
+
 ## 1.0.3
 
 - Added support for changing the file filter of a favorite folder after creation

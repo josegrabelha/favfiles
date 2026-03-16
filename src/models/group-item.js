@@ -1,5 +1,4 @@
 const vscode = require('vscode');
-const path = require('path');
 const { BaseItem } = require('./base-item');
 const { TYPE_GROUP } = require('../constants');
 const { FileFavorite } = require('./file-favorite');
@@ -77,10 +76,7 @@ class GroupItem extends BaseItem {
     const item = new vscode.TreeItem(this.label, vscode.TreeItemCollapsibleState.Collapsed);
     item.contextValue = this.children.length > 0 ? 'group' : 'group-empty';
     item.tooltip = this.label;
-    item.iconPath = {
-      light: path.join(__dirname, '../../resources/light/folderG.svg'),
-      dark: path.join(__dirname, '../../resources/dark/folderG.svg'),
-    };
+    item.iconPath = vscode.ThemeIcon.Folder;
     return item;
   }
 }

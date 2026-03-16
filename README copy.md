@@ -20,11 +20,9 @@ FavFiles is useful when you want to:
 
 ## Features
 
-### A dedicated favorites sidebar
+![Menu](images/favfiles-features.png)
 
-Keep your important files, folders, and grouped shortcuts in one place inside VS Code.
-
-![FavFiles sidebar view](images/favfiles-features.png)
+![Menu](images/favfiles-commands.png)
 
 ### Pin files you use all the time
 

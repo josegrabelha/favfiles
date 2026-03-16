@@ -39,15 +39,18 @@
     "commands": [
       {
         "command": "favFolderTree.palette.edit",
-        "title": "FavFiles: Edit favorites data"
+        "title": "Edit favorites data",
+        "category": "FavFiles"
       },
       {
         "command": "favFolderTree.palette.reload",
-        "title": "FavFiles: Reload favorites"
+        "title": "Reload favorites",
+        "category": "FavFiles"
       },
       {
         "command": "favFolderTree.palette.favoriteActiveFileToGroup",
-        "title": "FavFiles: Add active file to favorites group"
+        "title": "Add active file to favorites group",
+        "category": "FavFiles"
       },
       {
         "command": "favFolderTree.palette.favoriteFile",
@@ -55,27 +58,33 @@
         "icon": {
           "light": "resources/light/new-file.svg",
           "dark": "resources/dark/new-file.svg"
-        }
+        },
+        "category": "FavFiles"
       },
       {
         "command": "favFolderTree.palette.favoriteActiveFile",
-        "title": "FavFiles: Add active file to favorites"
+        "title": "Add active file to favorites",
+        "category": "FavFiles"
       },
       {
         "command": "favFolderTree.palette.openFavorite",
-        "title": "FavFiles: Open favorite"
+        "title": "Open favorite",
+        "category": "FavFiles"
       },
       {
         "command": "favFolderTree.palette.createGroup",
-        "title": "FavFiles: Create new group"
+        "title": "Create new group",
+        "category": "FavFiles"
       },
       {
         "command": "favFolderTree.palette.openGroup",
-        "title": "FavFiles: Open files from group"
+        "title": "Open files from group",
+        "category": "FavFiles"
       },
       {
         "command": "favFolderTree.palette.openFolder",
-        "title": "FavFiles: Open files from folder"
+        "title": "Open files from folder",
+        "category": "FavFiles"
       },
       {
         "command": "favFolderTree.palette.favoriteFolder",
@@ -83,7 +92,8 @@
         "icon": {
           "light": "resources/light/new-folder.svg",
           "dark": "resources/dark/new-folder.svg"
-        }
+        },
+        "category": "FavFiles"
       },
       {
         "command": "favFolderTree.view.createGroup",
@@ -91,7 +101,8 @@
         "icon": {
           "light": "resources/light/new-folderG.svg",
           "dark": "resources/dark/new-folderG.svg"
-        }
+        },
+        "category": "FavFiles"
       },
       {
         "command": "favFolderTree.view.search",
@@ -99,7 +110,8 @@
         "icon": {
           "light": "resources/light/search.svg",
           "dark": "resources/dark/search.svg"
-        }
+        },
+        "category": "FavFiles"
       },
       {
         "command": "favFolderTree.view.sortMenu",
@@ -107,7 +119,8 @@
         "icon": {
           "light": "resources/light/sort-precedence.svg",
           "dark": "resources/dark/sort-precedence.svg"
-        }
+        },
+        "category": "FavFiles"
       },
       {
         "command": "favFolderTree.view.editFavorites",
@@ -115,7 +128,8 @@
         "icon": {
           "light": "resources/light/edit.svg",
           "dark": "resources/dark/edit.svg"
-        }
+        },
+        "category": "FavFiles"
       },
       {
         "command": "favFolderTree.context.renameFavorite",
@@ -191,7 +205,8 @@
         "icon": {
           "light": "resources/light/refresh.svg",
           "dark": "resources/dark/refresh.svg"
-        }
+        },
+        "category": "FavFiles"
       }
     ],
     "viewsContainers": {
@@ -267,6 +282,38 @@
         },
         {
           "command": "favFolderTree.menu.favoriteActiveFolderToGroup",
+          "when": "false"
+        },
+        {
+          "command": "favFolderTree.context.renameFavorite",
+          "when": "false"
+        },
+        {
+          "command": "favFolderTree.context.removeFavorite",
+          "when": "false"
+        },
+        {
+          "command": "favFolderTree.context.changeFolderFilter",
+          "when": "false"
+        },
+        {
+          "command": "favFolderTree.context.moveFavorite",
+          "when": "false"
+        },
+        {
+          "command": "favFolderTree.context.createGroup",
+          "when": "false"
+        },
+        {
+          "command": "favFolderTree.context.favoriteFolder",
+          "when": "false"
+        },
+        {
+          "command": "favFolderTree.context.openFolder",
+          "when": "false"
+        },
+        {
+          "command": "favFolderTree.context.refreshFolder",
           "when": "false"
         }
       ],
@@ -413,8 +460,8 @@
           ],
           "markdownDescription": "Controls alphabetical order in the tree.",
           "enumDescriptions": [
-            "A–Z order.",
-            "Z–A order."
+            "A\u2013Z order.",
+            "Z\u2013A order."
           ]
         }
       }

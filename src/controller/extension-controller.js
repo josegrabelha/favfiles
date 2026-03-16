@@ -50,6 +50,14 @@ class ExtensionController {
     }
   }
 
+  selectedTreeItem() {
+    return this._treeView?.selection?.[0];
+  }
+
+  resolveCommandTarget(target) {
+    return target ?? this.selectedTreeItem();
+  }
+
   getTreeDragDenialReason(item) {
     if (!item) {
       return 'Nothing to drag.';
@@ -236,8 +244,9 @@ class ExtensionController {
   }
 
   async addToTargetGroup(target, kind) {
-    const group = this.normalizeGroupTarget(target);
+    const group = this.normalizeGroupTarget(this.resolveCommandTarget(target));
     if (!group) {
+      vscode.window.showInformationMessage('Select a FavFiles group first.');
       return;
     }
 
@@ -341,8 +350,9 @@ class ExtensionController {
   }
 
   async changeFolderFilter(target) {
-    const folder = this.normalizeFolderTarget(target);
+    const folder = this.normalizeFolderTarget(this.resolveCommandTarget(target));
     if (!(folder instanceof FolderFavorite) || folder.dynamic) {
+      vscode.window.showInformationMessage('Select a favorite folder first.');
       return;
     }
 
@@ -391,7 +401,7 @@ class ExtensionController {
   }
 
   async openGroup(group) {
-    group = this.normalizeGroupTarget(group) ?? group;
+    group = this.normalizeGroupTarget(group ?? this.selectedTreeItem()) ?? group;
 
     if (!group) {
       group = await this.promptGroupSelection(false);
@@ -429,7 +439,7 @@ class ExtensionController {
   }
 
   async openFolder(folder) {
-    folder = this.normalizeFolderTarget(folder) ?? folder;
+    folder = this.normalizeFolderTarget(folder ?? this.selectedTreeItem()) ?? folder;
 
     if (!folder) {
       folder = await this.promptFolderSelection();
@@ -443,6 +453,7 @@ class ExtensionController {
   }
 
   async refreshFolder(target) {
+    target = this.resolveCommandTarget(target);
     if (!target) {
       this.refreshView(undefined);
       return;
@@ -467,6 +478,8 @@ class ExtensionController {
   }
 
   async createGroup(targetGroup) {
+    targetGroup = this.resolveCommandTarget(targetGroup);
+
     const label = await vscode.window.showInputBox({
       prompt: 'Name of your new group (as shown in the FavFiles view):',
       value: 'New group',
@@ -491,7 +504,9 @@ class ExtensionController {
   }
 
   async removeFavorite(item) {
+    item = this.resolveCommandTarget(item);
     if (!item) {
+      vscode.window.showInformationMessage('Select a FavFiles item first.');
       return;
     }
 
@@ -503,7 +518,9 @@ class ExtensionController {
   }
 
   async openInNewWindow(item) {
+    item = this.resolveCommandTarget(item);
     if (!item) {
+      vscode.window.showInformationMessage('Select a favorite file or folder first.');
       return;
     }
 
@@ -520,7 +537,9 @@ class ExtensionController {
   }
 
   async moveFavorite(item) {
+    item = this.resolveCommandTarget(item);
     if (!item) {
+      vscode.window.showInformationMessage('Select a FavFiles item first.');
       return;
     }
 
@@ -544,7 +563,9 @@ class ExtensionController {
   }
 
   async renameFavorite(item) {
+    item = this.resolveCommandTarget(item);
     if (!item) {
+      vscode.window.showInformationMessage('Select a FavFiles item first.');
       return;
     }
 
@@ -564,6 +585,12 @@ class ExtensionController {
   }
 
   async openResource(item) {
+    item = this.resolveCommandTarget(item);
+    if (!item) {
+      vscode.window.showInformationMessage('Select a favorite file first.');
+      return;
+    }
+
     await item.activate();
   }
 

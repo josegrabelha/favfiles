@@ -52,7 +52,7 @@ class FileFavorite extends BaseItem {
 
     const exists = await this.exists();
     if (!exists) {
-      item.description = '[Missing]';
+      item.description = '· Missing';
       item.contextValue = this.dynamic ? 'browse-file-missing' : 'favorite-missing';
       item.tooltip = `${this.resourcePath}\n\nThis file could not be found.`;
     } else {

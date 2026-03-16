@@ -1,4 +1,5 @@
 const vscode = require('vscode');
+const path = require('path');
 const { BaseItem } = require('./base-item');
 const { TYPE_GROUP } = require('../constants');
 const { FileFavorite } = require('./file-favorite');
@@ -77,6 +78,7 @@ class GroupItem extends BaseItem {
     item.contextValue = this.children.length > 0 ? 'group' : 'group-empty';
     item.tooltip = this.label;
     item.iconPath = vscode.ThemeIcon.Folder;
+    item.description = '· group';
     return item;
   }
 }

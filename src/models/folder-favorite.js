@@ -154,10 +154,10 @@ class FolderFavorite extends BaseItem {
   async toTreeItem() {
     const item = new vscode.TreeItem(this.label, vscode.TreeItemCollapsibleState.Collapsed);
     item.label = this.label;
-    item.resourceUri = this.resourceUri;
     item.iconPath = vscode.ThemeIcon.Folder;
 
     const descriptionParts = [];
+    descriptionParts.push('· folder');
     if (!this.dynamic) {
       descriptionParts.push(`[${this.filter}]`);
     }
@@ -166,7 +166,7 @@ class FolderFavorite extends BaseItem {
     item.tooltip = `${this.resourcePath}\nFilter: ${this.filter}`;
 
     if (!await this.exists()) {
-      descriptionParts.push('[Missing]');
+      descriptionParts.push('· Missing');
       item.contextValue = this.dynamic ? 'browse-folder-missing' : 'folder-missing';
       item.tooltip = `${this.resourcePath}\nFilter: ${this.filter}\n\nThis folder could not be found.`;
     }

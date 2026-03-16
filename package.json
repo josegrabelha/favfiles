@@ -2,7 +2,7 @@
   "name": "favfiles",
   "displayName": "FavFiles",
   "description": "Keep your favorite files and folders in a browsable tree.",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "publisher": "josegrabelha",
   "author": "Jose Abelha",
   "license": "MIT",
@@ -55,10 +55,7 @@
       {
         "command": "favFolderTree.palette.favoriteFile",
         "title": "Add file to favorites",
-        "icon": {
-          "light": "resources/light/new-file.svg",
-          "dark": "resources/dark/new-file.svg"
-        },
+        "icon": "$(new-file)",
         "category": "FavFiles"
       },
       {
@@ -89,46 +86,34 @@
       {
         "command": "favFolderTree.palette.favoriteFolder",
         "title": "Add folder to favorites",
-        "icon": {
-          "light": "resources/light/new-folder.svg",
-          "dark": "resources/dark/new-folder.svg"
-        },
+        "icon": "$(new-folder)",
         "category": "FavFiles"
       },
       {
         "command": "favFolderTree.view.createGroup",
         "title": "Create group",
         "icon": {
-          "light": "resources/light/new-folderG.svg",
-          "dark": "resources/dark/new-folderG.svg"
+          "light": "resources/light/new-folder-group.svg",
+          "dark": "resources/dark/new-folder-group.svg"
         },
         "category": "FavFiles"
       },
       {
         "command": "favFolderTree.view.search",
         "title": "Search favorites",
-        "icon": {
-          "light": "resources/light/search.svg",
-          "dark": "resources/dark/search.svg"
-        },
+        "icon": "$(search)",
         "category": "FavFiles"
       },
       {
         "command": "favFolderTree.view.sortMenu",
         "title": "Sort favorites",
-        "icon": {
-          "light": "resources/light/sort-precedence.svg",
-          "dark": "resources/dark/sort-precedence.svg"
-        },
+        "icon": "$(sort-precedence)",
         "category": "FavFiles"
       },
       {
         "command": "favFolderTree.view.editFavorites",
         "title": "Edit favorites",
-        "icon": {
-          "light": "resources/light/edit.svg",
-          "dark": "resources/dark/edit.svg"
-        },
+        "icon": "$(edit)",
         "category": "FavFiles"
       },
       {
@@ -150,10 +135,7 @@
       {
         "command": "favFolderTree.context.openGroup",
         "title": "Open files from group",
-        "icon": {
-          "light": "resources/light/folder-openedG.svg",
-          "dark": "resources/dark/folder-openedG.svg"
-        }
+        "icon": "$(folder-opened)"
       },
       {
         "command": "favFolderTree.context.openResource",
@@ -190,10 +172,7 @@
       {
         "command": "favFolderTree.context.openFolder",
         "title": "Open files from folder",
-        "icon": {
-          "light": "resources/light/folder-opened.svg",
-          "dark": "resources/dark/folder-opened.svg"
-        }
+        "icon": "$(folder-opened)"
       },
       {
         "command": "favFolderTree.context.refreshFolder",
@@ -202,10 +181,7 @@
       {
         "command": "favFolderTree.view.refreshAllFolders",
         "title": "Refresh all",
-        "icon": {
-          "light": "resources/light/refresh.svg",
-          "dark": "resources/dark/refresh.svg"
-        },
+        "icon": "$(refresh)",
         "category": "FavFiles"
       }
     ],

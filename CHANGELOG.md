@@ -1,6 +1,8 @@
 ## 1.0.3
 
 - Added support for changing the file filter of a favorite folder after creation
+- Improved the commands palette for FavFiles
+- Improved the README documentation
 
 ## 1.0.2
 

@@ -154,10 +154,8 @@ class FolderFavorite extends BaseItem {
   async toTreeItem() {
     const item = new vscode.TreeItem(this.label, vscode.TreeItemCollapsibleState.Collapsed);
     item.label = this.label;
-    item.iconPath = {
-      light: path.join(__dirname, '../../resources/light/folder.svg'),
-      dark: path.join(__dirname, '../../resources/dark/folder.svg'),
-    };
+    item.resourceUri = this.resourceUri;
+    item.iconPath = vscode.ThemeIcon.Folder;
 
     const descriptionParts = [];
     if (!this.dynamic) {

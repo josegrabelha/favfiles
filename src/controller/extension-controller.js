@@ -21,6 +21,12 @@ class ExtensionController {
       canSelectMany: false,
     });
 
+    this._lastResourceOpen = { resourcePath: undefined, openedAt: 0 };
+    
+    // Approximate double-click window used by this extension.
+    // VS Code does not expose the OS/Workbench double-click threshold for TreeItems.
+    this._resourceDoubleClickThresholdMs = 500;
+
     this.registerCommands(context);
 
     context.subscriptions.push(
@@ -591,7 +597,21 @@ class ExtensionController {
       return;
     }
 
-    await item.activate();
+    if (!(item instanceof FileFavorite)) {
+      await item.activate();
+      return;
+    }
+
+    const now = Date.now();
+    const isSameResource = this._lastResourceOpen.resourcePath === item.resourcePath;
+    const elapsed = now - this._lastResourceOpen.openedAt;
+    const isDoubleClick = isSameResource && elapsed <= this._resourceDoubleClickThresholdMs;
+
+    this._lastResourceOpen = isDoubleClick
+      ? { resourcePath: undefined, openedAt: 0 }
+      : { resourcePath: item.resourcePath, openedAt: now };
+
+    await item.activate({ preview: !isDoubleClick });
   }
 
   async selectSortMode() {

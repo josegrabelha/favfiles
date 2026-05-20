@@ -1,3 +1,7 @@
+## 1.0.6
+
+- Match VS Code Explorer behavior in the FavFiles tree: single-click opens files in preview mode, while double-click opens them in a permanent editor tab.
+
 ## 1.0.5
 
 - TreeView and icons improved.

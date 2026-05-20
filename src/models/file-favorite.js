@@ -31,12 +31,16 @@ class FileFavorite extends BaseItem {
     };
   }
 
-  async activate() {
+  async activate(editorOptions = {}) {
     if (!await this.exists()) {
       return vscode.window.showWarningMessage(`File not found: ${this.resourcePath}`);
     }
 
-    return vscode.commands.executeCommand('vscode.open', this.resourceUri);
+    return vscode.commands.executeCommand('vscode.open', this.resourceUri, {
+      preview: false,
+      preserveFocus: false,
+      ...editorOptions,
+    });
   }
 
   location() {

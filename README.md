@@ -30,6 +30,14 @@ Keep your important files, folders, and grouped shortcuts in one place inside VS
 
 Add files from the Explorer, from the active editor, or from the Command Palette.
 
+### Add to FavFiles from the editor
+
+Beyond the Explorer, you can favorite the file you are working on without leaving the editor: right-click inside an open editor and choose **Add to FavFiles**, use the **Add to FavFiles** action in the editor title bar, or right-click a tab. Adding a file to your favorites is always one click away.
+
+### Drag and drop into FavFiles
+
+Drag files or folders from the Explorer, or drag a tab from the editor area, and drop them onto the FavFiles tree to add them instantly. Existing items can also be reordered and moved by dragging them within the tree.
+
 ### Add folders for fast navigation
 
 Save folders to FavFiles and browse them directly from the custom tree without constantly switching back to the Explorer.
@@ -45,6 +53,8 @@ Examples:
 - Reports
 - Customer A
 - Infrastructure
+
+Groups can be nested, and the group picker shows nested groups with indentation so you can target the exact location when adding items.
 
 ### Open related files together
 
@@ -65,15 +75,21 @@ Open the FavFiles view from the Activity Bar.
 You can add items in different ways:
 
 - right-click a file or folder in the Explorer
+- right-click inside an open editor and choose **Add to FavFiles**
+- use the **Add to FavFiles** action in the editor title bar or tab context menu
 - add the currently active file
 - use the Command Palette
 - use the toolbar actions in the FavFiles view
 
-### 3. Create groups
+### 3. Drag and drop into FavFiles
 
-Use groups to organize your shortcuts into a structure that matches your work.
+Drag files or folders from the Explorer, or drag a tab from the editor area, and drop them onto the FavFiles tree to favorite them instantly. You can also drag existing items within the tree to reorder or move them between groups.
 
-### 4. Open what you need faster
+### 4. Create groups
+
+Use groups to organize your shortcuts into a structure that matches your work. Groups can be nested, and the group picker displays nested groups with indentation.
+
+### 5. Open what you need faster
 
 Open individual files, expand favorite folders, or open an entire group when you want to bring back a full working set.
 

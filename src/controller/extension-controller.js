@@ -3,7 +3,7 @@ const path = require('path');
 const { VIEW_ID } = require('../constants');
 const { currentSortDescription, sortOptionItems } = require('../utils/sort');
 const { fileName } = require('../utils/path');
-const { GroupItem, FileFavorite, FolderFavorite, isGroup } = require('../models');
+const { GroupItem, FileFavorite, FolderFavorite, isGroup, itemSort } = require('../models');
 const { FavoritesStore } = require('../store/favorites-store');
 const { FavoritesProvider } = require('../provider/favorites-provider');
 const { FavoritesDragAndDropController } = require('../provider/favorites-dnd-controller');
@@ -294,6 +294,68 @@ class ExtensionController {
     return new FileFavorite(label, fsPath, false);
   }
 
+  currentSelectedGroup() {
+    return this.normalizeGroupTarget(this.selectedTreeItem());
+  }
+
+  async addToFavFilesActiveFile(uri) {
+    const item = await this.createFavorite(uri);
+    if (!item) {
+      return;
+    }
+
+    const defaultGroup = this.currentSelectedGroup();
+    const group = this.normalizeGroupTarget(await this.promptGroupSelection(true, defaultGroup));
+    if (!group) {
+      return;
+    }
+
+    const isRoot = group === ROOT_GROUP;
+    if (isRoot) {
+      await this._store.add(item);
+    } else {
+      group.addChild(item);
+      await this._store.update();
+    }
+
+    this.refreshView(undefined);
+    this._treeView.reveal(item, { select: true, focus: true });
+  }
+
+  async addToFavoritesCurrentGroup(uri) {
+    const item = await this.createFavorite(uri);
+    if (!item) {
+      return;
+    }
+
+    const group = this.currentSelectedGroup() ?? ROOT_GROUP;
+    const isRoot = group === ROOT_GROUP;
+    if (isRoot) {
+      await this._store.add(item);
+    } else {
+      group.addChild(item);
+      await this._store.update();
+    }
+
+    this.refreshView(undefined);
+    this._treeView.reveal(item, { select: true, focus: true });
+  }
+
+  async addFileToFavorites() {
+    const uris = await vscode.window.showOpenDialog({
+      canSelectFiles: true,
+      canSelectMany: true,
+      openLabel: 'Add to FavFiles',
+    });
+    if (!uris || !uris.length) {
+      return;
+    }
+
+    for (const uri of uris) {
+      await this.addToFavoritesCurrentGroup(uri);
+    }
+  }
+
   async pickFavoriteFile() {
     const picks = await vscode.window.showOpenDialog({
       canSelectFiles: true,
@@ -432,6 +494,42 @@ class ExtensionController {
     return undefined;
   }
 
+  async dropExternalFiles(target, fsPaths) {
+    if (!fsPaths || !fsPaths.length) {
+      return;
+    }
+
+    const group = this.normalizeGroupTarget(target) ?? ROOT_GROUP;
+    const isRoot = group === ROOT_GROUP;
+
+    let added = 0;
+    for (const fsPath of fsPaths) {
+      if (!fsPath) {
+        continue;
+      }
+      const label = fsPath.split(/[\\/]/).pop() || fsPath;
+      const item = new FileFavorite(label, fsPath, false);
+      if (isRoot) {
+        await this._store.add(item);
+      } else {
+        group.addChild(item);
+      }
+      added += 1;
+    }
+
+    if (!added) {
+      return;
+    }
+
+    if (!isRoot) {
+      await this._store.update();
+    }
+    this.refreshView(undefined);
+
+    const where = isRoot ? 'the root' : `group "${group.label}"`;
+    vscode.window.showInformationMessage(`Added ${added} file(s) to ${where}.`);
+  }
+
   normalizeFolderTarget(target) {
     if (target instanceof FolderFavorite) {
       return target;
@@ -549,7 +647,7 @@ class ExtensionController {
       return;
     }
 
-    const group = this.normalizeGroupTarget(await this.promptGroupSelection(true, item.parent ?? ROOT_GROUP)) ?? ROOT_GROUP;
+    const group = this.normalizeGroupTarget(await this.promptGroupSelection(true, undefined, item.parent ?? ROOT_GROUP)) ?? ROOT_GROUP;
 
     if (item.parent) {
       item.parent.removeChild(item);
@@ -655,6 +753,15 @@ class ExtensionController {
     reg('favFolderTree.menu.favoriteActiveFile', uri => this.addToFavorites(uri, 'file', false));
     reg('favFolderTree.menu.favoriteActiveFolder', uri => this.addToFavorites(uri, 'folder', false));
     reg('favFolderTree.menu.favoriteActiveFileToGroup', uri => this.addToFavorites(uri, 'file', true));
+    reg('favFolderTree.menu.addToFavFiles', uri => this.addToFavFilesActiveFile(uri));
+    reg('favFolderTree.menu.addFileToFavorites', () => this.addFileToFavorites());
+    reg('favFolderTree.menu.addCurrentFileToFavorites', () => {
+      if (!vscode.window.activeTextEditor) {
+        vscode.window.showInformationMessage('No file is currently open in the editor.');
+        return;
+      }
+      return this.addToFavoritesCurrentGroup(undefined);
+    });
     reg('favFolderTree.menu.favoriteActiveFolderToGroup', uri => this.addToFavorites(uri, 'folder', true));
 
     reg('favFolderTree.palette.favoriteFile', this.pickFavoriteFile);
@@ -724,17 +831,51 @@ class ExtensionController {
     return selected ? selected.item : undefined;
   }
 
-  async promptGroupSelection(includeRoot, ...ignore) {
-    const groups = (includeRoot ? [ROOT_GROUP] : []).concat(this._store.groups());
-    if (!groups || groups.length === 0) {
+  async promptGroupSelection(includeRoot, defaultItem, ...ignore) {
+    const entries = [];
+
+    const walk = (group, depth) => {
+      const ignored = ignore.find(item => item === group);
+      if (ignored) {
+        group.children.filter(isGroup).sort(itemSort).forEach(child => walk(child, depth));
+        return;
+      }
+      entries.push({ item: group, depth });
+      group.children.filter(isGroup).sort(itemSort).forEach(child => walk(child, depth + 1));
+    };
+
+    if (includeRoot) {
+      entries.push({ item: ROOT_GROUP, depth: 0 });
+    }
+    this._store._favorites.filter(isGroup).sort(itemSort).forEach(group => walk(group, 0));
+
+    if (!entries.length) {
       vscode.window.showWarningMessage('No favorite groups found, please define a group first');
       return undefined;
     }
 
-    return vscode.window.showQuickPick(
-      groups.filter(group => !ignore.find(ignored => ignored === group)),
-      { placeHolder: 'Please select a favorites group' }
-    );
+    const indent = depth => (depth > 0 ? '  '.repeat(depth) + '↳ ' : '');
+    const picks = entries.map(entry => ({
+      label: entry.item === ROOT_GROUP
+        ? 'Top level (root)'
+        : indent(entry.depth) + entry.item.label,
+      description: entry.item === ROOT_GROUP ? undefined : entry.item.resourcePath,
+      item: entry.item,
+    }));
+
+    const defaultGroup = (defaultItem === undefined || defaultItem === null)
+      ? this.currentSelectedGroup()
+      : defaultItem;
+
+    const activeItem = picks.find(pick => pick.item === defaultGroup)
+      || (includeRoot ? picks.find(pick => pick.item === ROOT_GROUP) : undefined);
+
+    const selected = await vscode.window.showQuickPick(picks, {
+      placeHolder: 'Please select a favorites group (nested groups are indented)',
+      activeItem,
+    });
+
+    return selected ? selected.item : undefined;
   }
 }
 

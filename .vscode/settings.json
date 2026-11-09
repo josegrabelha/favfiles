@@ -1,0 +1,11 @@
+{
+    "git.showActionButton": {
+        "commit": false,
+        "publish": false,
+        "sync": false
+    },
+    "workbench.view.alwaysShowHeaderActions": true,
+    "scm.alwaysShowActions": true,
+    "scm.repositories.selectionMode": "single",
+    "scm.countBadge": "focused"
+}

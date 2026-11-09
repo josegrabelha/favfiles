@@ -2,7 +2,7 @@
   "name": "favfiles",
   "displayName": "FavFiles",
   "description": "Keep your favorite files and folders in a browsable tree.",
-  "version": "1.0.6",
+  "version": "1.1.0",
   "publisher": "josegrabelha",
   "author": "Jose Abelha",
   "license": "MIT",
@@ -170,6 +170,21 @@
         "title": "FavFiles: Add to favorites group"
       },
       {
+        "command": "favFolderTree.menu.addToFavFiles",
+        "title": "Add to FavFiles",
+        "category": "FavFiles"
+      },
+      {
+        "command": "favFolderTree.menu.addFileToFavorites",
+        "title": "Add file to Favorites",
+        "category": "FavFiles"
+      },
+      {
+        "command": "favFolderTree.menu.addCurrentFileToFavorites",
+        "title": "Add current file to Favorites",
+        "category": "FavFiles"
+      },
+      {
         "command": "favFolderTree.context.openFolder",
         "title": "Open files from folder",
         "icon": "$(folder-opened)"
@@ -249,6 +264,18 @@
           "when": "false"
         },
         {
+          "command": "favFolderTree.menu.addToFavFiles",
+          "when": "false"
+        },
+        {
+          "command": "favFolderTree.menu.addFileToFavorites",
+          "when": "false"
+        },
+        {
+          "command": "favFolderTree.menu.addCurrentFileToFavorites",
+          "when": "false"
+        },
+        {
           "command": "favFolderTree.menu.favoriteActiveFile",
           "when": "false"
         },
@@ -305,6 +332,11 @@
           "when": "resource && !explorerResourceIsFolder"
         },
         {
+          "command": "favFolderTree.menu.addToFavFiles",
+          "group": "1_modification",
+          "when": "resource && !explorerResourceIsFolder"
+        },
+        {
           "command": "favFolderTree.menu.favoriteActiveFolder",
           "group": "commands",
           "when": "resource && explorerResourceIsFolder"
@@ -315,7 +347,36 @@
           "when": "resource && explorerResourceIsFolder"
         }
       ],
+      "editor/context": [
+        {
+          "command": "favFolderTree.menu.addToFavFiles",
+          "group": "1_favfiles",
+          "when": "editorFocus"
+        }
+      ],
+      "editor/title/context": [
+        {
+          "command": "favFolderTree.menu.addToFavFiles",
+          "group": "1_modification"
+        }
+      ],
+      "tab/title/context": [
+        {
+          "command": "favFolderTree.menu.addToFavFiles",
+          "group": "1_modification"
+        }
+      ],
       "view/item/context": [
+        {
+          "command": "favFolderTree.menu.addFileToFavorites",
+          "group": "navigation",
+          "when": "view == fav-folder-tree-favorites"
+        },
+        {
+          "command": "favFolderTree.menu.addCurrentFileToFavorites",
+          "group": "navigation",
+          "when": "view == fav-folder-tree-favorites"
+        },
         {
           "command": "favFolderTree.context.openInNewWindow",
           "when": "view == fav-folder-tree-favorites && (viewItem == folder || viewItem == folder-missing || viewItem == browse-folder || viewItem == browse-folder-missing)"
